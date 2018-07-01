@@ -11,20 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import ssm.mybatis.basedao.MybatisDao;
 import ssm.mybatis.po.User;
+import ssm.utils.ObjectMapperExtend;
 
 @Repository
 public class MybatisDaoImpl2<T> implements MybatisDao<T> {
-	@Resource(name="")
-	private Object obj;
-	public void save(T t) throws Exception {
-//		this.getClass().
-	}
-	public void insert(T t) throws Exception {
-		Class<? extends MybatisDaoImpl2> clazz = this.getClass();
-		Field field = clazz.getDeclaredField("obj");
-		field.setAccessible(true);
-		Method method = field.getClass().getMethod("insert", t.getClass());
-		method.invoke(clazz.newInstance(), t);
+	public void save(T t) {
+		ObjectMapperExtend.insert(t);
 	}
 
 	public void saveOrUpdate(Serializable id, T t) throws Exception {
@@ -66,6 +58,5 @@ public class MybatisDaoImpl2<T> implements MybatisDao<T> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-//	@Resource(name = "userMapperExtend")
 
 }
