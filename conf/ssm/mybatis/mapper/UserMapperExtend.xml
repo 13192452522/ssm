@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssm.mybatis.mapper.UserMapperExtend">
+	<!-- 遍历User所有的项 -->
+	<sql id="allCondition">
+		<where>
+			<set>
+				<if test="_parameter.id != null">
+					id = #{_parameter.id}
+				</if>
+				<if
+					test="_parameter.username != null and _parameter.username != ''">
+					username = #{_parameter.username}
+				</if>
+				<if
+					test="_parameter.realname != null and _parameter.realname != ''">
+					realname = #{_parameter.}
+				</if>
+				<if test="_parameter.email != null and _parameter.email != ''">
+					email = #{_parameter.email}
+				</if>
+				<if
+					test="_parameter.password != null and _parameter.password != ''">
+					password = #{_parameter.password}
+				</if>
+				<if
+					test="_parameter.joindate != null and _parameter.joindate != ''">
+					joindate = #{_parameter.joindate}
+				</if>
+				<if
+					test="_parameter.lastdate != null and _parameter.lastdate != ''">
+					lastdate = #{_parameter.lastdate}
+				</if>
+				<if test="_parameter.capacity != null">
+					capacity = #{_parameter.capacity}
+				</if>
+			</set>
+		</where>
+	</sql>
+	<sql id="selectUserAll">select id, username, realname, email, password, joindate,
+		lastdate, capacity from t_user</sql>
+	<!-- Number getTotalCount(User user); -->
+	<select id="getTotalCount" resultType="java.lang.Long">
+		select count(id) from t_user
+		<if test="_parameter != null">
+			<include refid="allCondition"></include>
+		</if>
+	</select>
+	<!-- Collection<User> getPageSize(User user, Long startIndex, Integer pageSize); -->
+	<select id="getPageSize" resultType="ssm.mybatis.po.User">
+		<include refid="selectUserAll"></include>
+		<if test="_parameter != null">
+			<include refid="allCondition"></include>
+		</if>
+	</select>
+
+	<select id="login" resultType="ssm.mybatis.po.User">
+		<include refid="selectUserAll"></include>
+			<where>
+				username = #{_parameter.username} and password = #{_parameter.password}
+			</where>
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
